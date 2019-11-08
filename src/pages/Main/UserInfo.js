@@ -1,47 +1,34 @@
-import React, { Component } from 'react';
-import { Collapse } from 'react-bootstrap';
-import { connect } from 'react-redux';
-import cx from 'classnames';
+import React from 'react';
+import profileImage from '../../assets/images/faces/face-3.jpg';
+const UserInfo = () => (
+  <div className="card card-user">
+    <div className="image">
+      <img src="https://ununsplash.imgix.net/photo-1431578500526-4d9613015464?fit=crop&amp;fm=jpg&amp;h=300&amp;q=75&amp;w=400" alt="..." />
+    </div>
+    <div className="content">
+      <div className="author">
+        <a href="#">
+          <img className="avatar border-gray" src={profileImage} alt="Mike Andrew" />
 
-class UserInfo extends Component {
-
-  state = {
-    isShowingUserMenu: false
-  };
-
-  render() {
-    let { user } = this.props;
-    let { isShowingUserMenu } = this.state;
-    return (
-      <div className="user-wrapper">
-        <div className="user">
-          <img src={user.image} alt={user.name} className="photo" />
-          <div className="userinfo">
-            <div className="username">
-              {user.name}
-            </div>
-            <div className="title">Admin</div>
-          </div>
-          <span
-            onClick={() => this.setState({ isShowingUserMenu: !this.state.isShowingUserMenu })}
-            className={cx("pe-7s-angle-down collapse-arrow", {
-              active: isShowingUserMenu
-            })}></span>
-        </div>
-        <Collapse in={isShowingUserMenu}>
-          <ul className="nav user-nav">
-            <li><a href="#">My Profile</a></li>
-            <li><a href="#">Edit Profile</a></li>
-            <li><a href="#">Settings</a></li>
-          </ul>
-        </Collapse>
+          <h4 className="title">
+            Mike Andrew<br />
+            <small>michael24</small>
+          </h4>
+        </a>
       </div>
-    );
-  }
-}
+      <p className="description text-center">
+        "Lamborghini Mercy <br />
+        Your chick she so thirsty <br />
+        I'm in that two seat Lambo"
+      </p>
+    </div>
+    <hr />
+    <div className="text-center">
+      <button href="#" className="btn btn-simple"><i className="fa fa-facebook-square"></i></button>
+      <button href="#" className="btn btn-simple"><i className="fa fa-twitter"></i></button>
+      <button href="#" className="btn btn-simple"><i className="fa fa-google-plus-square"></i></button>
+    </div>
+  </div>
+);
 
-const mapStateToProps = state => ({
-  user: state.Auth.user
-});
-
-export default connect(mapStateToProps)(UserInfo);
+export default UserInfo;
