@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import styles from './LaunchFeed.scss';
+import styles from './LunchFeed.scss';
 import classNames from 'classnames/bind';
 
 const cx = classNames.bind(styles);
 
-class LaunchFeed extends Component{
+class LunchFeed extends Component{
     
     state ={
         resturantName: 'Fazer A Block',
@@ -73,4 +73,4 @@ class LaunchFeed extends Component{
     }    
 }
 
-export default LaunchFeed
+export default LunchFeed

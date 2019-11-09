@@ -3,7 +3,7 @@ import EmailChart from './EmailChart';
 import SalesChart from './SalesChart';
 import UserBehaviorChart from './UserBehaviorChart';
 import Tasks from './Tasks';
-import LaunchFeed from './LaunchFeed';
+import LunchFeed from 'widgets/LunchFeed';
 
 const Dashboard = () => (
   <div className="content">
@@ -26,7 +26,7 @@ const Dashboard = () => (
       </div>
       <div className="row">
         <div className="col-md-6">
-          <LaunchFeed/>
+          <LunchFeed/>
         </div>
       </div>
     </div>
