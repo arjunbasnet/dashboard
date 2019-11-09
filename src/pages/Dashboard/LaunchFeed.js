@@ -1,4 +1,8 @@
 import React, { Component } from 'react';
+import styles from './LaunchFeed.scss';
+import classNames from 'classnames/bind';
+
+const cx = classNames.bind(styles);
 
 class LaunchFeed extends Component{
     
@@ -40,13 +44,13 @@ class LaunchFeed extends Component{
             <div className="content">
                 <div id="LaunchFeed">
                 {this.state.menus.map(menu => (
-                    <div className="LaunchFeed__menu">
-                        <h5 className="menu-title">{menu.name}</h5>
-                        <div className="menu-description">
+                    <div className={cx('LaunchFeed__menu')}>
+                        <h5 className={cx('menu-title')}>{menu.name}</h5>
+                        <div className={cx('menu-description')}>
                             <ul>
                                 {
                                     menu.components.map(item =>(
-                                        <li className="menu-component">{item}</li>  
+                                        <li className={cx('menu-component')}>{item}</li>  
                                     ))
                                 }
                             </ul>
