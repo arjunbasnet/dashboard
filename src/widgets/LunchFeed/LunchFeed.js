@@ -42,9 +42,9 @@ class LunchFeed extends Component{
               <p className="category">{this.state.resturantName}</p>
             </div>
             <div className="content">
-                <div id="LaunchFeed">
+                <div id="LunchFeed">
                 {this.state.menus.map(menu => (
-                    <div className={cx('LaunchFeed__menu')}>
+                    <div className={cx('LunchFeed__menu')}>
                         <h5 className={cx('menu-title')}>{menu.name}</h5>
                         <div className={cx('menu-description')}>
                             <ul>
