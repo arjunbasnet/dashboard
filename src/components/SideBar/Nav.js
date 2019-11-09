@@ -17,14 +17,14 @@ class Nav extends Component {
             <p>Dashboard</p>
           </Link>
         </li>       
-        <li className={this.isPathActive('/charts') ? 'active' : null}>
-          <Link to="/charts">
+        <li className={this.isPathActive('/about') ? 'active' : null}>
+          <Link to="/about">
             <i className="pe-7s-note2"></i>
             <p>About</p>
           </Link>
         </li>
-        <li className={this.isPathActive('/calendar') ? 'active' : null}>
-          <Link to="/calendar">
+        <li className={this.isPathActive('/logout') ? 'active' : null}>
+          <Link to="/logout">
             <i className="pe-7s-back"></i>
             <p>Log out</p>
           </Link>
