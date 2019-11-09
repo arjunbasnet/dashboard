@@ -1,0 +1,18 @@
+@import "variables";
+
+.LaunchFeed{
+    box-sizing: border-box;
+}
+
+.LaunchFeed__menu{
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    background-color: #eeeeee;
+
+    .menu-title{
+        background-color: #a9a9a9;
+        padding: 2px 10px;
+    }
+    
+}
+

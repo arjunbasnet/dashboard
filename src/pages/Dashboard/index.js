@@ -3,6 +3,7 @@ import EmailChart from './EmailChart';
 import SalesChart from './SalesChart';
 import UserBehaviorChart from './UserBehaviorChart';
 import Tasks from './Tasks';
+import LaunchFeed from './LaunchFeed';
 
 const Dashboard = () => (
   <div className="content">
@@ -23,7 +24,11 @@ const Dashboard = () => (
           <Tasks />
         </div>
       </div>
-
+      <div className="row">
+        <div className="col-md-6">
+          <LaunchFeed/>
+        </div>
+      </div>
     </div>
   </div>
 );
