@@ -40,6 +40,7 @@
     "promise": "8.0.1",
     "react": "^15.6.1",
     "react-addons-shallow-compare": "^15.6.0",
+    "react-beautiful-dnd": "10.1.1",
     "react-big-calendar": "^0.15.0",
     "react-bootstrap": "^0.31.2",
     "react-bootstrap-sweetalert": "^4.0.0",
@@ -66,8 +67,7 @@
     "webpack": "3.5.1",
     "webpack-dev-server": "3.0.0",
     "webpack-manifest-plugin": "1.2.1",
-    "whatwg-fetch": "2.0.3",
-    "react-beautiful-dnd": "10.1.1"
+    "whatwg-fetch": "2.0.3"
   },
   "devDependencies": {
     "cross-env": "^5.2.0",
