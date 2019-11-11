@@ -38,7 +38,7 @@ class LunchFeed extends Component{
     render() {
         return (
 
-          <div className="card ">
+          <div className="card " {...this.props} ref={this.props.innerRef}>
             <div className="header">
                 <h4 className="title">Lunch Menu</h4>
             </div>
