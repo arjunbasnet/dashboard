@@ -1,0 +1,54 @@
+import React from 'react';
+import SalesChart from './SalesChart';
+import Tasks from './Tasks';
+import LunchFeed from 'widgets/LunchFeed';
+import Weather from 'widgets/Weather';
+import {Draggable, Droppable, DragDropContext} from "react-beautiful-dnd";
+
+function onDragEnd(result) {
+    //TODO
+    return result;
+}
+
+const Dashboard = () => (
+    <DragDropContext onDragEnd={onDragEnd}>
+        <div className="content">
+            <div className="container-fluid">
+
+                <div className="row">
+                    <Droppable droppableId="list">
+                        {provided => (
+                            <div className="col-md-6" ref={provided.innerRef} {...provided.droppableProps}>
+                                <Draggable draggableId={1} index={1}>
+                                    {provided => (
+
+                                        <SalesChart
+                                            provided={provided}
+                                            ref={provided.innerRef}/>
+                                    )}
+
+                                </Draggable>
+                                {provided.placeholder}
+                            </div>
+                        )}
+                    </Droppable>
+                    <div className="col-md-6">
+                        <Tasks/>
+                    </div>
+
+
+                </div>
+                <div className="row">
+                    <div className="col-md-6">
+                        <LunchFeed/>
+                    </div>
+                    <div className="col-md-6">
+                        <Weather/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </DragDropContext>
+);
+
+export default Dashboard;
