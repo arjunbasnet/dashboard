@@ -4,6 +4,7 @@ import { toggleMobileNavVisibility } from '../../reducers/Layout';
 import { Navbar, Nav, NavItem, NavDropdown, MenuItem, FormGroup, FormControl} from 'react-bootstrap';
 import UserInfo from './UserInfo';
 
+
 const Header = ({
   showMobileMenu,
   toggleMobileNavVisibility

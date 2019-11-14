@@ -1,1 +1,1 @@
-export {default} from './LunchFeed'
+export {default} from './NewsFeed'

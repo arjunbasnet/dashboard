@@ -13,7 +13,7 @@ class SalesChart extends React.Component {
     };
 
     optionsSales = {
-        lineSmooth: true,
+        //lineSmooth: true,
         low: 0,
         high: 800,
         showArea: true,
