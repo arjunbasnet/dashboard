@@ -12,7 +12,8 @@ class NewsFeed extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            rssFeedItems: []
+            rssFeedItems: [],
+            rssFeed: []
         };
 
 
@@ -23,13 +24,13 @@ class NewsFeed extends Component {
 
             .then((response) => response.text())
             .then((responseData) => rssParser.parse(responseData))
-            .then(rss => this.setState({rssFeedItems: rss.items}))
+            .then(rss => this.setState({rssFeedItems: rss.items, rssFeed: rss}))
             .catch(error => console.log(error));
-
+        console.log(this.state.rssFeed);
     }
 
     render() {
-        const {rssFeedItems} = this.state;
+        const {rssFeedItems, rssFeed} = this.state;
         return (
             <div className="card " {...this.props} ref={this.props.innerRef}>
                 <div className="header">
@@ -37,6 +38,9 @@ class NewsFeed extends Component {
                 </div>
                 <div className="content">
                     <div id="NewsFeed">
+                        <div className={cx('LunchFeed__header','clearfix')}>
+                            <h5 className={cx('menu-title','pull-left')}>{rssFeed.title}</h5>
+                        </div>
                         <div className={cx('menu-description')}>
 
                         <ul>
@@ -55,7 +59,7 @@ class NewsFeed extends Component {
                 <div className="footer">
                     <hr/>
                     <div className="stats">
-                        <i className="fa fa-history"></i>
+                        <i className="fa fa-history"></i>Updated: {rssFeed.lastPublished}
                     </div>
                 </div>
             </div>
