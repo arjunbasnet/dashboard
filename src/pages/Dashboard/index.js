@@ -84,10 +84,8 @@ class Dashboard extends React.Component {
 
         this.onDragEnd = this.onDragEnd.bind(this);
     }
-
     onDragEnd = result => {
         const {source, destination} = result;
-        // console.log(result);
         // dropped outside the list
         if (!destination) {
             return;
@@ -100,7 +98,7 @@ class Dashboard extends React.Component {
                 destination.index
             );
 
-            let state;
+            let state = {items};
 
             if (source.droppableId === 'drop2') {
                 state = {items1: items};
@@ -109,7 +107,6 @@ class Dashboard extends React.Component {
             } else if (source.droppableId === 'drop3') {
                 state = {items2: items};
             }
-            // console.log(state);
             this.setState(state);
         } else {
             const result = move(
@@ -118,16 +115,20 @@ class Dashboard extends React.Component {
                 source,
                 destination
             );
-
-            this.setState({
-                items0: result.drop1,
-                items1: result.drop2,
-                items2: result.drop3
-            });
+            if(result.drop1!==null && typeof result.drop1!=="undefined"){
+                this.setState({items0: result.drop1});
+            }
+            if(result.drop2!==null && typeof result.drop2!=="undefined") {
+                this.setState({items1: result.drop2});
+            }
+            if(result.drop3!==null && typeof result.drop3!=="undefined") {
+                this.setState({items2: result.drop3});
+            }
         }
     };
 
     render() {
+        const {items0, items1,items2} = this.state;
         return (
 
             <DragDropContext onDragEnd={this.onDragEnd}>
@@ -138,7 +139,9 @@ class Dashboard extends React.Component {
                         <Droppable droppableId="drop1">
                             {(provided, snapshot) => (
                                 <div className="row" ref={provided.innerRef}  {...provided.droppableProps}>
-                                    {this.state.items0.map((item, index) => (
+                                    {console.log(this.state.items0)}
+
+                                    {items0.map((item, index) => (
                                         <div className="col-md-6">
                                             <Draggable key={item.id}
                                                        draggableId={item.id}
@@ -167,7 +170,8 @@ class Dashboard extends React.Component {
                         < Droppable droppableId="drop2">
                             {(provided, snapshot) => (
                                 <div className="row" ref={provided.innerRef}  {...provided.droppableProps}>
-                                    {this.state.items1.map((item, index) => (
+                                    {console.log(this.state.items1)}
+                                    {items1.map((item, index) => (
                                         <div className="col-md-6">
                                             <Draggable key={item.id} draggableId={item.id}
                                                        index={index}>
@@ -192,7 +196,8 @@ class Dashboard extends React.Component {
                         <Droppable droppableId="drop3">
                             {(provided, snapshot) => (
                                 <div className="row" ref={provided.innerRef}  {...provided.droppableProps}>
-                                    {this.state.items2.map((item, index) => (
+                                    {console.log(this.state.items2)}
+                                    {items2.map((item, index) => (
                                         <div className="col-md-6">
                                             <Draggable key={item.id}
                                                        draggableId={item.id}
