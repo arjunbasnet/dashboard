@@ -1,0 +1,36 @@
+.NewsFeed{
+    box-sizing: border-box;
+}
+
+.NewsFeed__menu{
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    background-color: #eeeeee;
+    margin-bottom: 20px;
+
+    .menu-title{
+        margin: 0;
+    }
+
+    .menu-description {
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+    
+    &:last-of-type{
+      margin-bottom: 0;  
+    }
+}
+
+.NewsFeed__header{
+    background-color: #a9a9a9;
+    padding: 8px;
+}
+
+.NewsFeed__form{
+    margin-bottom: 15px;
+
+    .control-label{
+        margin-right: 5px;
+    }
+}
