@@ -19,11 +19,7 @@ const Header = ({
         </button>
       </Navbar.Header>
 
-      <Navbar.Collapse>
-        <Nav pullRight>
-        <NavItem href="https://github.com/arjunbasnet/dashboard">Check us out on Github!</NavItem>
-        </Nav>
-      </Navbar.Collapse>
+      
     </Navbar>
   );
 
