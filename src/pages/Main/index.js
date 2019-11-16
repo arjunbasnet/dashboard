@@ -8,8 +8,7 @@ import { withRouter } from 'react-router-dom';
 import Header from './Header';
 import Footer from './Footer';
 import SideBar from '../../components/SideBar';
-import ThemeOptions from '../../components/ThemeOptions';
-import MobileMenu from '../../components/MobileMenu';
+
 /**
  * Pages
  */
