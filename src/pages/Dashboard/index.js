@@ -4,6 +4,7 @@ import Tasks from './Tasks';
 import LunchFeed from 'widgets/LunchFeed';
 import Weather from 'widgets/Weather';
 import NewsFeed from "../../widgets/NewsFeed";
+import StockChart from 'widgets/StockChart';
 import {Draggable, Droppable, DragDropContext} from "react-beautiful-dnd";
 
 const components = {
@@ -11,7 +12,8 @@ const components = {
     tasks: Tasks,
     lunchfeed: LunchFeed,
     weather: Weather,
-    newsfeed: NewsFeed
+    newsfeed: NewsFeed,
+    stockchart: StockChart
 };
 
 const getItems = (countRow, offset = 0) => {
@@ -29,7 +31,7 @@ const getItems = (countRow, offset = 0) => {
         items[1].content = 'Weather';
     } else if(offset===4){
         items[0].content = 'NewsFeed';
-        items[1].content = 'SalesChart';
+        items[1].content = 'StockChart';
     }
 
 
