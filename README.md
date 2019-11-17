@@ -1,4 +1,4 @@
-# Crystal React Bootstrap Dashboard
+# React Bootstrap Dashboard
 
 ## Get started
 *Development*
