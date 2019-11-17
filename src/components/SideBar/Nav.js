@@ -23,12 +23,6 @@ class Nav extends Component {
             <p>About</p>
           </Link>
         </li>
-        <li className={this.isPathActive('/logout') ? 'active' : null}>
-          <Link to="/logout">
-            <i className="pe-7s-back"></i>
-            <p>Log out</p>
-          </Link>
-        </li>
       </ul>
     );
   }
