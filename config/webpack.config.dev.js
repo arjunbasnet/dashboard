@@ -26,6 +26,7 @@ const env = getClientEnvironment(publicUrl);
 // It is focused on developer experience and fast rebuilds.
 // The production configuration is different and lives in a separate file.
 module.exports = {
+  target: 'web',
   mode: 'development',
   // You may want 'eval' instead if you prefer to see the compiled output in DevTools.
   // See the discussion in https://github.com/facebookincubator/create-react-app/issues/343.
@@ -193,6 +194,17 @@ module.exports = {
             ],
           },
           {
+            test: /\.js$/,
+            include: [
+              /\/mongoose\//i,
+              /\/kareem\//i
+            ],
+            loader: 'babel-loader',
+            options: {
+              presets: ['es2015']
+            }
+          },
+          {
             test: /\.scss$/,
             include: [paths.appSrc, paths.appNodeModules],
             use: [
@@ -276,10 +288,13 @@ module.exports = {
   // Tell Webpack to provide empty mocks for them so importing them works.
   node: {
     dgram: 'empty',
+    dns: 'empty',
     fs: 'empty',
+    'module': 'empty',
     net: 'empty',
     tls: 'empty',
     child_process: 'empty',
+
   },
   // Turn off performance hints during development because we don't do any
   // splitting or minification in interest of speed. These warnings become

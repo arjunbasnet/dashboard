@@ -1,9 +1,11 @@
 // widget related data
-  var mongoose = require('mongoose');
-  var Schema = mongoose.Schema;
-
-var WidgetSchema = new Schema({
+const mongoose = require("../db");
+const schema = {
     id:{ type: mongoose.Schema.Types.ObjectId, index: true },
     name:  String,
     type: String
-  });
+};
+const collectionName = "Widget";
+const widgetSchema = mongoose.Schema(schema);
+const Widget = mongoose.model(collectionName, widgetSchema);
+module.exports = Widget;

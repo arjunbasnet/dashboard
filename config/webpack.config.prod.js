@@ -50,6 +50,7 @@ const extractTextPluginOptions = shouldUseRelativeAssetPaths
 // It compiles slowly and is focused on producing a fast and minimal bundle.
 // The development configuration is different and lives in a separate file.
 module.exports = {
+  target: 'web',
   mode: 'production',
   // Don't attempt to continue if there are any errors.
   bail: true,
@@ -210,6 +211,17 @@ module.exports = {
             // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
           },
           {
+            test: /\.js$/,
+            include: [
+              /\/mongoose\//i,
+              /\/kareem\//i
+            ],
+            loader: 'babel-loader',
+            options: {
+              presets: ['es2015']
+            }
+          },
+          {
             test: /\.scss$/,
             include: [paths.appSrc, paths.appNodeModules],
             use: [
@@ -351,7 +363,9 @@ module.exports = {
   // Tell Webpack to provide empty mocks for them so importing them works.
   node: {
     dgram: 'empty',
+    dns: 'empty',
     fs: 'empty',
+    'module': 'empty',
     net: 'empty',
     tls: 'empty',
     child_process: 'empty',

@@ -5,9 +5,7 @@ import LunchFeed from 'widgets/LunchFeed';
 import Weather from 'widgets/Weather';
 import NewsFeed from "../../widgets/NewsFeed";
 import StockChart from 'widgets/StockChart';
-import Database from "../../models/db";
 import {Draggable, Droppable, DragDropContext} from "react-beautiful-dnd";
-
 const components = {
     saleschart: SalesChart,
     tasks: Tasks,
@@ -86,6 +84,9 @@ class Dashboard extends React.Component {
         };
 
         this.onDragEnd = this.onDragEnd.bind(this);
+        let User = require( "../../models/User");
+        console.log(User);
+        /**/
     }
     onDragEnd = result => {
         const {source, destination} = result;
@@ -142,7 +143,6 @@ class Dashboard extends React.Component {
                         <Droppable droppableId="drop1">
                             {(provided, snapshot) => (
                                 <div className="row" ref={provided.innerRef}  {...provided.droppableProps}>
-                                    {console.log(this.state.items0)}
 
                                     {items0.map((item, index) => (
                                         <div className="col-md-6">
@@ -173,7 +173,6 @@ class Dashboard extends React.Component {
                         < Droppable droppableId="drop2">
                             {(provided, snapshot) => (
                                 <div className="row" ref={provided.innerRef}  {...provided.droppableProps}>
-                                    {console.log(this.state.items1)}
                                     {items1.map((item, index) => (
                                         <div className="col-md-6">
                                             <Draggable key={item.id} draggableId={item.id}
@@ -199,7 +198,6 @@ class Dashboard extends React.Component {
                         <Droppable droppableId="drop3">
                             {(provided, snapshot) => (
                                 <div className="row" ref={provided.innerRef}  {...provided.droppableProps}>
-                                    {console.log(this.state.items2)}
                                     {items2.map((item, index) => (
                                         <div className="col-md-6">
                                             <Draggable key={item.id}
