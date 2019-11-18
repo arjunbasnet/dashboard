@@ -3,6 +3,6 @@
   var Schema = mongoose.Schema;
 
   var WidgetSchemaSchema = new Schema({
-	WidgetID: Number,
-    property:  { name: String, value: String }
+	WidgetID: mongoose.Schema.Types.ObjectId,
+    data: Object
   });
