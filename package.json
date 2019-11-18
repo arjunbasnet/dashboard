@@ -1,6 +1,6 @@
 {
-  "name": "crystal-dashboard",
-  "version": "0.1.0",
+  "name": "dashboard-of-life",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "animate.css": "^3.5.2",
@@ -34,7 +34,7 @@
     "jest": "20.0.4",
     "moment": "^2.18.1",
     "mongodb": "^3.3.4",
-    "moongoose": "0.0.5",
+    "mongoose": "^5.7.11",
     "object-assign": "4.1.1",
     "pe7-icon": "^1.0.4",
     "postcss-flexbugs-fixes": "3.2.0",
