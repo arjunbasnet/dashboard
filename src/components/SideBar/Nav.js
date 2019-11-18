@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import { Collapse } from 'react-bootstrap';
 
 
 class Nav extends Component {
@@ -21,12 +20,6 @@ class Nav extends Component {
           <Link to="/about">
             <i className="pe-7s-note2"></i>
             <p>About</p>
-          </Link>
-        </li>
-        <li className={this.isPathActive('/logout') ? 'active' : null}>
-          <Link to="/logout">
-            <i className="pe-7s-back"></i>
-            <p>Log out</p>
           </Link>
         </li>
       </ul>

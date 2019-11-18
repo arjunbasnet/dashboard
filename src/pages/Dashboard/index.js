@@ -5,6 +5,7 @@ import LunchFeed from 'widgets/LunchFeed';
 import Weather from 'widgets/Weather';
 import NewsFeed from "../../widgets/NewsFeed";
 import StockChart from 'widgets/StockChart';
+import Database from "../../models/db";
 import {Draggable, Droppable, DragDropContext} from "react-beautiful-dnd";
 
 const components = {
@@ -75,7 +76,7 @@ class Dashboard extends React.Component {
     };
 
     getList = id => this.state[this.id2List[id]];
-
+    //db = new Database();
     constructor(props) {
         super(props);
         this.state = {
