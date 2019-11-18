@@ -1,86 +1,18 @@
-import React, { Component } from 'react';
-import styles from './Weather.scss';
-import classNames from 'classnames/bind';
+import React, { Component } from 'react'
+import styles from './Weather.scss'
+import classNames from 'classnames/bind'
+import WeatherDislay from './WeatherDisplay'
 
-const cx = classNames.bind(styles);
-
-
-// directly copied locations from weatherwidget-io
-// id should match
-const weatherLocations = [
-    {
-        name: "Espoo",
-        id: "60d2124d66",
-    },
-    {
-        name: "Helsinki",
-        id: "60d1724d94",
-    },
-    {
-        name: "Kathmandu",
-        id: "27d7285d32",
-    },
-    {
-        name: "Madrid",
-        id: "40d42n3d70",
-    },
-    {
-        name: "Rovaniemi",
-        id: "66d5025d73",
-    }                
-]
-
-const widgetDefaultAttrs = {
-    class: "weatherwidget-io",
-    font: "Roboto",
-    theme: "weather_one" 
-}
-
-const FORECAST_URL = "https://forecast7.com"
-const PROVIDER_URL = "https://weatherwidget.io"
+const cx = classNames.bind(styles)
 
 class Weather extends Component{
-    state= {
+    state = {
         location:'60d2124d66'
-    }
-
-    componentDidMount(){
-        const script = document.createElement("script")
-        this._initForcasLink()
-        script.async = true
-        script.innerHTML = "!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];"+
-            "if(!d.getElementById(id)){js=d.createElement(s);js.id=id;"+
-            "js.src='https://weatherwidget.io/js/widget.min.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');"
-
-        this.container.appendChild(script)        
-    }
-
-    _initForcasLink(){
-        let locationId = this.state.location;
-        let location = weatherLocations.filter((location)=>{ return location.id === locationId})[0];
-        this.forcastLink.href = FORECAST_URL+'/en/'+location.id+'/'+location.name.toLowerCase()+'/'
-        this.forcastLink.setAttribute("data-label_1",location.name.toUpperCase());
-        this.forcastLink.innerText = location.name.toUpperCase();
     }
 
     locationChange = (event)=>{
         let locationId = event.target.value;
-        let targetFrame = this.forcastLink.querySelector("iFrame");
-        let location = weatherLocations.filter((location)=>{ return location.id === locationId})[0];
-
         this.setState({location:locationId})
-
-        // load weather for new location
-        let pstMessage = {
-            id: targetFrame.id,
-            font: widgetDefaultAttrs.font,
-            class: widgetDefaultAttrs.class,
-            theme: widgetDefaultAttrs.theme,
-            href: FORECAST_URL+'/en/'+location.id+'/'+location.name.toLowerCase()+'/',
-            label_1: location.name.toUpperCase()
-        }
-        targetFrame.contentWindow.postMessage(pstMessage,PROVIDER_URL)
-        this.forcastLink.href = pstMessage.href
     }
 
     render() {
@@ -102,14 +34,12 @@ class Weather extends Component{
                                 <option value="60d1724d94">Helsinki</option>
                                 <option value="27d7285d32">Kathmandu</option>
                                 <option value="66d5025d73">Rovaniemi</option>
+                                <option value="50d0814d44">Prague</option>
                                 <option value="40d42n3d70">Madrid</option>
                             </select>
                         </div>                        
                     </form>
-                    <a className="weatherwidget-io"  data-font="Roboto" href="/"
-                        data-theme="weather_one" 
-                        ref={el =>(this.forcastLink = el)}>location</a>
-                                       
+                    <WeatherDislay location={this.state.location} />
                 </div>
             </div>
         </div>
