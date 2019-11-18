@@ -10,10 +10,10 @@
  const userSchema = mongoose.Schema(schema);
  const User = mongoose.model(collectionName, userSchema);
  console.log(User);
- User.create({
+ /*User.create({
      email:  "yo2mno@yahoo.ro",
      password: "123456",
      firstName: "Mihai",
      lastName: "Macarie"
- });
+ });*/
  module.exports = User;
