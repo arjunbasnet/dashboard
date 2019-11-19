@@ -1,40 +1,38 @@
 const express = require('express');
 const router = express.Router();
-let User = require( "../models/User");
-//get all users
+let DashboardConfig = require( "../models/DashboardConfig");
+
 router.get('/', async (req, res) => {
-    let users = await User.find();
-    return res.status(200).send(users);
+    let dash = await DashboardConfig.find();
+    return res.status(200).send(dash);
 });
 
-//get one user
 router.get('/:id', async (req, res) => {
     const {id} = req.params;
-    let user = await User.findById(id);
+    let dash = await DashboardConfig.findById(id);
     return res.status(200).send({
         error: false,
-        user
+        dash
     });
 });
 
-//create user
+
 router.post('/', async (req, res) => {
-    let user = await User.create(req.body);
+    let dash = await DashboardConfig.create(req.body);
     return res.status(201).send({
         error: false,
-        user
+        dash
     })
 });
 
-//update user
 router.put(`/:id`, async (req, res) => {
     const {id} = req.params;
 
-    let user = await User.findByIdAndUpdate(id, req.body);
+    let dash = await DashboardConfig.findByIdAndUpdate(id, req.body);
 
     return res.status(202).send({
         error: false,
-        user
+        dash
     })
 
 });
@@ -42,11 +40,11 @@ router.put(`/:id`, async (req, res) => {
 router.delete(`/:id`, async (req, res) => {
     const {id} = req.params;
 
-    let user = await User.findByIdAndDelete(id);
+    let dash = await DashboardConfig.findByIdAndDelete(id);
 
     return res.status(202).send({
         error: false,
-        user
+        dash
     })
 
 });
