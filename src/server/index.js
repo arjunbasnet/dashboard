@@ -1,15 +1,18 @@
 const express = require('express');
 const app = express();
 const os = require('os');
+let db = require('./database')
+const widgetRouter = require('./routes/widgets')
 const usersRouter = require('./routes/users')
 const mongoose = require("mongoose");
 const dbPath = "mongodb://localhost/test"
 var path = require('path');
 
 
+// connected
+db.isConnected()
 
-
-mongoose.connect(dbPath, {
+/* mongoose.connect(dbPath, {
     useNewUrlParser: true,
 });
 const db = mongoose.connection;
@@ -18,9 +21,11 @@ db.on("error", () => {
 });
 db.once("open", () => {
     console.log("> successfully opened the database");
-});
+}); */
+
 app.use(express.json());
 app.use(express.static('dist'));
+app.use('/api/widgets',widgetRouter);
 app.use('/users', usersRouter);
 app.get('/api/getUsername', (req, res) => res.send({ username: os.userInfo().username }));
 
