@@ -84,7 +84,7 @@ class Dashboard extends React.Component {
         };
 
         this.onDragEnd = this.onDragEnd.bind(this);
-        let User = require( "../../models/User");
+        let User = require( "../../../server/models/User");
         console.log(User);
         /**/
     }

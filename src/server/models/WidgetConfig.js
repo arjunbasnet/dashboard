@@ -1,4 +1,4 @@
-const mongoose = require("../db");
+const mongoose = require("mongoose");
 const schema = {
   WidgetID: mongoose.Schema.Types.ObjectId,
   data: Object

@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import cx from 'classnames';
 import { setBackgroundColor, setBackgroundImage, setEnableBackgroundImage } from '../reducers/ThemeOptions';
 import sideBar1 from '../assets/images/sidebar-1.jpg';
-import sideBar3 from '../assets/images/sidebar-3.jpg';
-import sideBar4 from '../assets/images/sidebar-4.jpg';
-import sideBar5 from '../assets/images/sidebar-5.jpg';
+import sideBar3 from '../client/assets/images/sidebar-3.jpg';
+import sideBar4 from '../client/assets/images/sidebar-4.jpg';
+import sideBar5 from '../client/assets/images/sidebar-5.jpg';
 
 class ThemeOptions extends Component {
 

@@ -5,7 +5,7 @@
 ```
 git clone https://github.com/arjunbasnet/dashboard.git
 npm install
-npm start
+npm run dev
 ```
 
 *Build*
