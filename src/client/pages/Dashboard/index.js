@@ -6,7 +6,7 @@ import Weather from 'widgets/Weather';
 import NewsFeed from "../../widgets/NewsFeed";
 import StockChart from 'widgets/StockChart';
 import {Draggable, Droppable, DragDropContext} from "react-beautiful-dnd";
-const mongoose = require('mongoose');
+
 const components = {
     saleschart: SalesChart,
     tasks: Tasks,
