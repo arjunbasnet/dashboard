@@ -2,34 +2,27 @@ const express = require('express');
 const app = express();
 const os = require('os');
 let db = require('./database')
-const widgetRouter = require('./routes/widgets')
-const usersRouter = require('./routes/users')
-const mongoose = require("mongoose");
-const dbPath = "mongodb://localhost/test"
-var path = require('path');
 
+const usersRouter = require('./routes/users');
+const widgetsRouter = require('./routes/widgets');
+const widgetConfigRouter = require('./routes/widgetconfig');
+const dashboardRouter = require('./routes/dashboard');
 
 // connected
 db.isConnected()
 
-/* mongoose.connect(dbPath, {
-    useNewUrlParser: true,
-});
-const db = mongoose.connection;
-db.on("error", () => {
-    console.log("> error occurred from the database");
-});
-db.once("open", () => {
-    console.log("> successfully opened the database");
-}); */
+
 
 app.use(express.json());
 app.use(express.static('dist'));
-app.use('/api/widgets',widgetRouter);
-app.use('/users', usersRouter);
+
+app.use('/api/users', usersRouter);
+app.use('/api/widgets', widgetsRouter);
+app.use('/api/widgetConfig', widgetConfigRouter);
+app.use('/api/dashboard', dashboardRouter);
 app.get('/api/getUsername', (req, res) => res.send({ username: os.userInfo().username }));
 
-//app.use('/static', express.static(path.join(__dirname, '../../build/static')));
+// renders dashboard app
 app.get('*', function(req, res) {
     res.sendFile('index.html', {root: 'dist'});
 });

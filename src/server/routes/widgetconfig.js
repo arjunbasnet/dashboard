@@ -1,40 +1,38 @@
 const express = require('express');
 const router = express.Router();
-let User = require( "../models/User");
-//get all users
+let WidgetConfig = require( "../models/WidgetConfig");
+
 router.get('/', async (req, res) => {
-    let users = await User.find();
-    return res.status(200).send(users);
+    let widget = await WidgetConfig.find();
+    return res.status(200).send(widget);
 });
 
-//get one user
 router.get('/:id', async (req, res) => {
     const {id} = req.params;
-    let user = await User.findById(id);
+    let widget = await WidgetConfig.findById(id);
     return res.status(200).send({
         error: false,
-        user
+        widget
     });
 });
 
-//create user
+
 router.post('/', async (req, res) => {
-    let user = await User.create(req.body);
+    let widget = await WidgetConfig.create(req.body);
     return res.status(201).send({
         error: false,
-        user
+        widget
     })
 });
 
-//update user
 router.put(`/:id`, async (req, res) => {
     const {id} = req.params;
 
-    let user = await User.findByIdAndUpdate(id, req.body);
+    let widget = await WidgetConfig.findByIdAndUpdate(id, req.body);
 
     return res.status(202).send({
         error: false,
-        user
+        widget
     })
 
 });
@@ -42,7 +40,7 @@ router.put(`/:id`, async (req, res) => {
 router.delete(`/:id`, async (req, res) => {
     const {id} = req.params;
 
-    let user = await User.findByIdAndDelete(id);
+    let user = await WidgetConfig.findByIdAndDelete(id);
 
     return res.status(202).send({
         error: false,
