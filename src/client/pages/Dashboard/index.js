@@ -1,9 +1,9 @@
 import React from 'react';
 import SalesChart from './SalesChart';
-import Tasks from './Tasks';
+import Tasks from 'widgets/Task/Tasks';
 import LunchFeed from 'widgets/LunchFeed';
 import Weather from 'widgets/Weather';
-import NewsFeed from "../../widgets/NewsFeed";
+import NewsFeed from 'widgets/NewsFeed';
 import StockChart from 'widgets/StockChart';
 import {Draggable, Droppable, DragDropContext} from "react-beautiful-dnd";
 
