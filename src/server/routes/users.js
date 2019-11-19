@@ -1,27 +1,54 @@
 const express = require('express');
 const router = express.Router();
 let User = require( "../models/User");
-// Get all subscribers
-router.get('/', (req, res) => {
-    res.send("test");
+//get all users
+router.get('/', async (req, res) => {
+    let users = await User.find();
+    return res.status(200).send(users);
+});
 
+//get one user
+router.get('/:id', async (req, res) => {
+    const {id} = req.params;
+    let user = await User.findById(id);
+    return res.status(200).send({
+        error: false,
+        user
+    });
+});
+
+//create user
+router.post('/', async (req, res) => {
+    let user = await User.create(req.body);
+    return res.status(201).send({
+        error: false,
+        user
+    })
+});
+
+//update user
+router.put(`/:id`, async (req, res) => {
+    const {id} = req.params;
+
+    let user = await User.findByIdAndUpdate(id, req.body);
+
+    return res.status(202).send({
+        error: false,
+        user
+    })
 
 });
 
-// Get one subscriber
-router.get('/:id', (req, res) => {
-});
+router.delete(`/:id`, async (req, res) => {
+    const {id} = req.params;
 
-// Create one subscriber
-router.post('/', (req, res) => {
-});
+    let user = await User.findByIdAndDelete(id);
 
-// Update one subscriber
-router.patch('/:id', (req, res) => {
-});
+    return res.status(202).send({
+        error: false,
+        user
+    })
 
-// Delete one subscriber
-router.delete('/:id', (req, res) => {
 });
 
 module.exports = router

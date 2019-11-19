@@ -1,9 +1,9 @@
 const express = require('express');
 const app = express();
 const os = require('os');
-const usersRouter = require('./routes/users')
+const usersRouter = require('./routes/users');
 const mongoose = require("mongoose");
-const dbPath = "mongodb://localhost/test"
+const dbPath = "mongodb://localhost/test";
 var path = require('path');
 
 
@@ -21,10 +21,9 @@ db.once("open", () => {
 });
 app.use(express.json());
 app.use(express.static('dist'));
-app.use('/users', usersRouter);
+app.use('/api/users', usersRouter);
 app.get('/api/getUsername', (req, res) => res.send({ username: os.userInfo().username }));
 
-//app.use('/static', express.static(path.join(__dirname, '../../build/static')));
 app.get('*', function(req, res) {
     res.sendFile('index.html', {root: 'dist'});
 });
