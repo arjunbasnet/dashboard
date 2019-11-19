@@ -32,7 +32,6 @@ const Main = ({
       <div className="wrapper">
         <div className="close-layer" onClick={hideMobileMenu}></div>
         <SideBar />
-
         <div className="main-panel">
           <Header />
           <Route exact path="/" component={Dashboard} />

@@ -6,6 +6,7 @@ import Weather from 'widgets/Weather';
 import NewsFeed from "../../widgets/NewsFeed";
 import StockChart from 'widgets/StockChart';
 import {Draggable, Droppable, DragDropContext} from "react-beautiful-dnd";
+const mongoose = require('mongoose');
 const components = {
     saleschart: SalesChart,
     tasks: Tasks,
@@ -72,9 +73,16 @@ class Dashboard extends React.Component {
         drop2: 'items1',
         drop3: 'items2'
     };
+    componentDidMount() {
+        fetch('/api/getUsername')
+            .then(res => res.json())
+            .then((data) => {
+              console.log(data)
+            })
+            .catch(console.log)
+    }
 
     getList = id => this.state[this.id2List[id]];
-    //db = new Database();
     constructor(props) {
         super(props);
         this.state = {
@@ -84,8 +92,7 @@ class Dashboard extends React.Component {
         };
 
         this.onDragEnd = this.onDragEnd.bind(this);
-        let User = require( "../../../server/models/User");
-        console.log(User);
+
         /**/
     }
     onDragEnd = result => {
@@ -136,7 +143,6 @@ class Dashboard extends React.Component {
         return (
 
             <DragDropContext onDragEnd={this.onDragEnd}>
-
                 <div className="content">
                     <div className="container-fluid">
 
