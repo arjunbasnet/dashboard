@@ -30,6 +30,5 @@ if (module.hot) {
     renderApp(NextApp);
   });
 }
-
 registerServiceWorker();
 

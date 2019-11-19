@@ -1,7 +1,7 @@
 const express = require('express');
 const os = require('os');
 const app = express();
-const User = require("./models/User")
+
 let mongoose = require("mongoose");
 const dbPath = "mongodb://localhost/test";
 mongoose.connect(dbPath, {

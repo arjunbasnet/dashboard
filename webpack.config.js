@@ -8,6 +8,7 @@ const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 const getClientEnvironment = require('./config/env');
 const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
+const webpack = require('webpack');
 const publicUrl = '';
 const env = getClientEnvironment(publicUrl);
 
@@ -16,7 +17,8 @@ process.env.BABEL_ENV = 'development';
 const outputDirectory = 'dist';
 
 module.exports = {
-    entry: ['babel-polyfill', './src/client/index.js'],
+    target: 'web',
+    entry: ['babel-polyfill', './src/client/index.js',require.resolve('react-dev-utils/webpackHotDevClient')],
     output: {
         // Next line is not used in dev but WebpackDevServer crashes without it:
         path: paths.appBuild,
@@ -201,10 +203,11 @@ module.exports = {
     },
     devServer: {
         port: 3000,
-        open: true,
+        overlay:true,
+        open: true/*,
         proxy: {
             '/api': 'http://localhost:8080'
-        }
+        }*/
     },
     plugins: [
         new CleanWebpackPlugin({
@@ -215,7 +218,8 @@ module.exports = {
             template: paths.appHtml,
         }),
         new InterpolateHtmlPlugin(HtmlWebpackPlugin, env.raw),
-        new CaseSensitivePathsPlugin()
+        new CaseSensitivePathsPlugin(),
+        new webpack.HotModuleReplacementPlugin(),
     ],
     node: {
         dgram: 'empty',
