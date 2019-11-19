@@ -48,6 +48,7 @@ a {
   font-weight: 200;
   transition-duration: .2s, .2s, .35s;
   background-color: $sidebar-bg;
+  box-shadow: 2px 2px 5px 0px $default-states-color;
 
   .sidebar-wrapper {
     background-color: $sidebar-bg;

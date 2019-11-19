@@ -143,7 +143,7 @@ class Dashboard extends React.Component {
         return (
 
             <DragDropContext onDragEnd={this.onDragEnd}>
-                <div className="content">
+                <div className="content" id="widgetContainer">
                     <div className="container-fluid">
 
                         <Droppable droppableId="drop1">
