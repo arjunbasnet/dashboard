@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import TaskForm from './TaskForm';
 import cx from 'classnames';
 import uncheckImage from '../../assets/images/checkbox-uncheck.svg';
 import checkImage from '../../assets/images/checkbox-check.svg';
@@ -54,15 +55,26 @@ class Tasks extends Component {
         });
     }
 
+    addTask (taskDesc){
+        let task = {
+            content: taskDesc,
+            completed: false,
+        }
+        this.setState((state)=>{
+            task.id = state.todos.length + 1
+            return {todos:state.todos.concat(task)}
+        })
+    }
+
     render() {
         return (
             <div className="card" {...this.props} ref={this.props.innerRef}>
                 <div className="header">
                     <h4 className="title">Tasks</h4>
-                    <p className="category">Backend development</p>
                 </div>
                 <div className="content">
-                    <form>
+                    <TaskForm addTask={this.addTask.bind(this)} />
+                    <form name="todoItemHandler">
                         {this.state.todos.map(todo => (
                             <div className={cx("todo-item", {completed: todo.completed})} key={todo.id}>
                                 <div className="todo-item-wrapper">
