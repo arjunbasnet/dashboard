@@ -4,65 +4,139 @@ import cx from 'classnames';
 import uncheckImage from '../../assets/images/checkbox-uncheck.svg';
 import checkImage from '../../assets/images/checkbox-check.svg';
 
+let DEMO_USER = {
+    firstName: "Dummy",
+    lastName: "Bindra",
+    email: "dum@task-tester.com"
+}
+
 class Tasks extends Component {
     state = {
-        todos: [
-            {
-                id: 1,
-                content: 'Sign contract for "What are conference organizers afraid of?"',
-                completed: true
-            },
-            {
-                id: 2,
-                content: 'Lines From Great Russian Literature? Or E-mails From My Boss?',
-                completed: true
-            },
-            {
-                id: 3,
-                content: 'Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit	',
-                completed: true
-            },
-            {
-                id: 4,
-                content: 'Create 4 Invisible User Experiences you Never Knew About',
-                completed: false
-            },
-            {
-                id: 5,
-                content: 'Read "Following makes Medium better"	',
-                completed: false
-            },
-            {
-                id: 6,
-                content: 'Lines From Great Russian Literature? Or E-mails From My Boss?',
-                completed: false
-            }
-        ]
+        tasks: [],
+        loading: true
     };
+
+    componentDidMount(){
+        this.loadUser()
+    }
+
+    async loadUser(){
+        this.setState({loading: true})
+
+        let response =   await fetch('/api/users?email='+DEMO_USER.email)
+        let users = await response.json()
+        console.log('result ',users);
+        // user with given email not found
+        if(!users.length){
+            response = await fetch('/api/users',{
+                 method:'POST',
+                 headers: {
+                 'Content-Type': 'application/json'
+                 },
+                 body:JSON.stringify(DEMO_USER)
+            })
+            
+            let result = await response.json()
+            DEMO_USER.id = result.user._id
+        }else{
+            DEMO_USER.id = users[0]._id
+        }
+
+        // load tasks belongin to users
+        response = await fetch('/api/tasks?user='+ DEMO_USER.id)
+        let result = await response.json()
+        if(!result.error){
+            this.setState({tasks: result.tasks,loading:false})
+        }else{
+            this.setState({loading:false})
+        }
+    }
+
+    listTask(){
+        this.setState({loading:true})
+
+        fetch('/api/tasks?user='+ DEMO_USER.id)
+        .then(res => res.json())
+        .then(res =>{
+            this.setState({tasks:res.tasks})
+        })
+        .finally(()=>{
+            this.setState({loading: false})
+        })
+    }
+
+    async createTask(task){
+        this.setState({loading:true})
+        let response = await fetch('/api/tasks',{
+            method:'POST',
+            headers: {
+            'Content-Type': 'application/json'
+            },
+            body:JSON.stringify(task)
+       })
+       
+       let result = await response.json()
+       this.setState({loading:false})
+       return result.task
+    }
+
+    updateTask(id,updateData){
+        fetch('/api/tasks/'+id,{
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body:JSON.stringify(updateData)            
+        })
+        .then(res => res.json())
+        .then((result)=>{
+            console.log('task updated',result);
+        })
+    }
+
+    deleteTask(id){
+        fetch('/api/tasks/'+id,{
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            }         
+        })
+        .then(res => res.json())
+        .catch(err =>{
+            console.log("something went wrong tryin gto delete");
+        })
+    }
 
     toggleComplete = todoId => {
         this.setState({
-            todos: this.state.todos.map(todo => {
-                if (todo.id === todoId) todo.completed = !todo.completed;
+            tasks: this.state.tasks.map(todo => {
+                if (todo._id === todoId) todo.completed = !todo.completed;
                 return todo;
             })
         });
+        let task = this.state.tasks.filter(task =>{ return task._id === todoId})[0]
+        this.updateTask(todoId,{completed: task.completed})
     }
 
-    deleteTodo = todoId => {
+    removeTask = todoId => {
         this.setState({
-            todos: this.state.todos.filter(todo => todo.id !== todoId)
+            tasks: this.state.tasks.filter(todo => todo._id !== todoId)
         });
+
+        this.deleteTask(todoId)
     }
 
-    addTask (taskDesc){
+    async addTask (desc){
         let task = {
-            content: taskDesc,
+            description: desc,
             completed: false,
+            user: DEMO_USER.id
         }
+        
+        task = await this.createTask(task)
+
         this.setState((state)=>{
-            task.id = state.todos.length + 1
-            return {todos:state.todos.concat(task)}
+            return {tasks:state.tasks.concat(task)}
         })
     }
 
@@ -75,35 +149,38 @@ class Tasks extends Component {
                 <div className="content">
                     <TaskForm addTask={this.addTask.bind(this)} />
                     <form name="todoItemHandler">
-                        {this.state.todos.map(todo => (
-                            <div className={cx("todo-item", {completed: todo.completed})} key={todo.id}>
+                        {this.state.tasks.map(todo => (
+                            <div className={cx("todo-item", {completed: todo.completed})} key={todo._id}>
                                 <div className="todo-item-wrapper">
                                     <label className={cx("checkbox", {
                                         checked: todo.completed
                                     })}
                                     >
-                  <span className="icons">
-                    <img className="first-icon" src={uncheckImage} width={17}/>
-                    <img className="second-icon" src={checkImage} width={17}/>
-                  </span>
+                                    <span className="icons">
+                                        <img className="first-icon" src={uncheckImage} width={17}/>
+                                        <img className="second-icon" src={checkImage} width={17}/>
+                                    </span>
                                         <input type="checkbox" data-toggle="checkbox" checked={todo.completed}
-                                               onChange={() => this.toggleComplete(todo.id)}/>
+                                               onChange={() => this.toggleComplete(todo._id)}/>
                                     </label>
-                                    <div className="todo-content">{todo.content}</div>
-                                    <a onClick={() => this.deleteTodo(todo.id)}>
+                                    <div className="todo-content">{todo.description}</div>
+                                    <a onClick={() => this.removeTask(todo._id)}>
                                         &times;
                                     </a>
                                 </div>
                             </div>
                         ))}
                     </form>
-
-
+                    {
+                        !this.state.tasks.length?(<h4>No Tasks</h4>):""
+                    }
                 </div>
                 <div className="footer">
                     <hr/>
                     <div className="stats">
-                        <i className="fa fa-history"></i> Updated 3 minutes ago
+                        {
+                            this.state.loading?"LOADING ...":""
+                        }
                     </div>
                 </div>
             </div>

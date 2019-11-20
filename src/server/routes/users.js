@@ -4,8 +4,8 @@ let User = require( "../models/User");
 //get all users
 router.get('/', async (req, res) => {
     let qParams = req.query
-
-    let users = await User.find(qParams);
+    console.log('query params ',qParams)
+    let users = await User.find(qParams)
     return res.status(200).send(users);
 });
 
