@@ -6,6 +6,8 @@ import Weather from 'widgets/Weather';
 import NewsFeed from 'widgets/NewsFeed';
 import StockChart from 'widgets/StockChart';
 import {Draggable, Droppable, DragDropContext} from "react-beautiful-dnd";
+import {UserHelper} from '../../HelperAPI/userHelper'
+
 
 const components = {
     saleschart: SalesChart,
@@ -74,12 +76,7 @@ class Dashboard extends React.Component {
         drop3: 'items2'
     };
     componentDidMount() {
-        fetch('/api/getUsername')
-            .then(res => res.json())
-            .then((data) => {
-              console.log(data)
-            })
-            .catch(console.log)
+        UserHelper.getUsers();
     }
 
     getList = id => this.state[this.id2List[id]];

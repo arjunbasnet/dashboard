@@ -23,7 +23,7 @@ class Tasks extends Component {
             },
             {
                 id: 4,
-                content: 'Create 4 Invisible User Experiences you Never Knew About',
+                content: 'Create 4 Invisible UserHelper Experiences you Never Knew About',
                 completed: false
             },
             {

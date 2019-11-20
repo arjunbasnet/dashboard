@@ -26,7 +26,7 @@ class NewsFeed extends Component {
             .then((responseData) => rssParser.parse(responseData))
             .then(rss => this.setState({rssFeedItems: rss.items, rssFeed: rss}))
             .catch(error => console.log(error));
-        console.log(this.state.rssFeed);
+        //console.log(this.state.rssFeed);
     }
 
     render() {

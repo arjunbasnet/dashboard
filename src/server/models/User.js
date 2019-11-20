@@ -9,5 +9,4 @@ const schema = {
 const collectionName = "User";
 const userSchema = mongoose.Schema(schema);
 const User = mongoose.model(collectionName, userSchema);
-//console.log(User);
 module.exports = User;
