@@ -1,28 +1,28 @@
 const proxy = require("./proxyHelper");
 
-export class UserHelper {
+export class DashboardHelper {
 
-    static getUsers = async () => {
+    static getDashboards = async () => {
         try {
-            let response = await fetch(proxy + "/api/users", {method: "GET"});
+            let response = await fetch(proxy + "/api/dashboard", {method: "GET"});
             return await response.json()
         } catch (error) {
             return console.log(error);
         }
     };
 
-    static getUserById = async id => {
+    static getDashboardsById = async id => {
         try {
-            let response = await fetch(proxy + "/api/users/" + id, {method: "GET"});
+            let response = await fetch(proxy + "/api/dashboard/" + id, {method: "GET"});
             return await response.json()
         } catch (error) {
             return console.log(error);
         }
     };
 
-    static addUser = async userData => {
+    static addWidget = async userData => {
         try {
-            let response = await fetch(proxy + "/api/users/", {
+            let response = await fetch(proxy + "/api/dashboard", {
                 method: "POST",
                 body: JSON.stringify(userData),
                 headers: {
@@ -35,18 +35,18 @@ export class UserHelper {
         }
     };
 
-    static updateUser = async id => {
+    static updateWidget = async id => {
         try {
-            let response = await fetch(proxy + "/api/users/" + id, {method: "PUT"});
+            let response = await fetch(proxy + "/api/dashboard/" + id, {method: "PUT"});
             return await response.json()
         } catch (error) {
             return console.log(error);
         }
     };
 
-    static deleteUser = async id => {
+    static deleteWidget = async id => {
         try {
-            let response = await fetch(proxy + "/api/users/" + id, {method: "DELETE"});
+            let response = await fetch(proxy + "/api/dashboard/" + id, {method: "DELETE"});
             return await response.json()
         } catch (error) {
             return console.log(error);

@@ -76,7 +76,9 @@ class Dashboard extends React.Component {
         drop3: 'items2'
     };
     componentDidMount() {
-        UserHelper.getUsers();
+        //debug
+        //UserHelper.deleteUser("5dd54739d6b36251546494ce").then((resp)=>console.log(resp));
+        UserHelper.getUsers().then((resp)=>console.log(resp));
     }
 
     getList = id => this.state[this.id2List[id]];
