@@ -7,6 +7,7 @@ const usersRouter = require('./routes/users');
 const widgetsRouter = require('./routes/widgets');
 const widgetConfigRouter = require('./routes/widgetconfig');
 const dashboardRouter = require('./routes/dashboard');
+const taskRouter = require('./routes/tasks');
 
 // connected
 db.isConnected()
@@ -20,6 +21,7 @@ app.use('/api/users', usersRouter);
 app.use('/api/widgets', widgetsRouter);
 app.use('/api/widgetConfig', widgetConfigRouter);
 app.use('/api/dashboard', dashboardRouter);
+app.use('/api/tasks',taskRouter);
 app.get('/api/getUsername', (req, res) => res.send({ username: os.userInfo().username }));
 
 // renders dashboard app
