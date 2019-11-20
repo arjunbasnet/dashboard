@@ -16,6 +16,15 @@ router.get('/:id', async (req, res) => {
     });
 });
 
+router.get('/user/:id', async (req, res) => {
+    const {id} = req.params;
+    let dash = await DashboardConfig.find().where("user").equals(id).exec();
+    return res.status(200).send({
+        error: false,
+        dash
+    });
+});
+
 
 router.post('/', async (req, res) => {
     let dash = await DashboardConfig.create(req.body);

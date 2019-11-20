@@ -20,7 +20,7 @@ export class DashboardHelper {
         }
     };
 
-    static addWidget = async userData => {
+    static addDashboard = async userData => {
         try {
             let response = await fetch(proxy + "/api/dashboard", {
                 method: "POST",
@@ -35,7 +35,7 @@ export class DashboardHelper {
         }
     };
 
-    static updateWidget = async id => {
+    static updateDashboard = async id => {
         try {
             let response = await fetch(proxy + "/api/dashboard/" + id, {method: "PUT"});
             return await response.json()
@@ -44,7 +44,7 @@ export class DashboardHelper {
         }
     };
 
-    static deleteWidget = async id => {
+    static deleteDashboard = async id => {
         try {
             let response = await fetch(proxy + "/api/dashboard/" + id, {method: "DELETE"});
             return await response.json()
@@ -53,6 +53,14 @@ export class DashboardHelper {
         }
     };
 
+    static getDashboardConfigByUserId = async id => {
+        try {
+            let response = await fetch(proxy + "/api/dashboard/user/" + id, {method: "GET"});
+            return await response.json()
+        } catch (error) {
+            return console.log(error);
+        }
+    };
 
 }
 

@@ -7,8 +7,11 @@ import NewsFeed from 'widgets/NewsFeed';
 import StockChart from 'widgets/StockChart';
 import {Draggable, Droppable, DragDropContext} from "react-beautiful-dnd";
 import {UserHelper} from '../../HelperAPI/userHelper'
+import {DashboardHelper} from "../../HelperAPI/dashboardHelper";
+import {WidgetHelper} from "../../HelperAPI/widgetConfigHelper";
+import babel from "@babel/core"
 
-
+const userId = "5dd5314f2424e65638f4a54c";
 const components = {
     saleschart: SalesChart,
     tasks: Tasks,
@@ -17,7 +20,22 @@ const components = {
     newsfeed: NewsFeed,
     stockchart: StockChart
 };
+/*DashboardHelper.getDashboardConfigByUserId(userId).then((res)=>{
+    res.dash[0].arrangement.forEach((value,key)=> {
+        WidgetHelper.getWidgetById(value.widgetId).then((res)=>setComponents(res.widget.name));
+    });
 
+});
+const setComponents = (component) =>{
+  components[component.toLowerCase()]=eval[component];
+    console.log(components);
+};*/
+/*DashboardHelper.getDashboardConfigByUserId(userId).then((res)=>{
+    res.dash[0].arrangement.forEach((value,key)=> {
+
+        //WidgetHelper.getWidgetById(value.widgetId).then((res)=>setComponents(res.widget.name));
+    });
+});*/
 const getItems = (countRow, offset = 0) => {
 
     let items = Array.from({length: countRow}, (v, k) => k).map(k => ({
@@ -70,25 +88,27 @@ function Widget(props) {
 }
 
 class Dashboard extends React.Component {
+
     id2List = {
-        drop1: 'items0',
-        drop2: 'items1',
-        drop3: 'items2'
+        drop1: '0',
+        drop2: '1',
+        drop3: '2'
     };
     componentDidMount() {
-        //debug
-        //UserHelper.deleteUser("5dd54739d6b36251546494ce").then((resp)=>console.log(resp));
-        UserHelper.getUsers().then((resp)=>console.log(resp));
+    };
+
+    getList = id => {
+        console.log("list:")
+        console.log(this.state.items[this.id2List[id]]);
+        return this.state.items[this.id2List[id]];
     }
 
-    getList = id => this.state[this.id2List[id]];
     constructor(props) {
         super(props);
-        this.state = {
-            items0: getItems(2, 0),
-            items1: getItems(2, 2),
-            items2: getItems(2, 4),
-        };
+        this.state = {items: []};
+        for(let i=0;i<=2;i++){
+            this.state.items[i]=getItems(2, i*2);
+        }
 
         this.onDragEnd = this.onDragEnd.bind(this);
 
@@ -96,7 +116,6 @@ class Dashboard extends React.Component {
     }
     onDragEnd = result => {
         const {source, destination} = result;
-        // dropped outside the list
         if (!destination) {
             return;
         }
@@ -107,17 +126,20 @@ class Dashboard extends React.Component {
                 source.index,
                 destination.index
             );
-
-            let state = {items};
+            console.log(items);
+            //let state = {items};
 
             if (source.droppableId === 'drop2') {
-                state = {items1: items};
+                this.state.items[1]= items;
+               // state = {items1: items};
             } else if (source.droppableId === 'drop1') {
-                state = {items0: items};
+                this.state.items[0]= items;
+                //state = {items0: items};
             } else if (source.droppableId === 'drop3') {
-                state = {items2: items};
+                this.state.items[2]= items;
+               // state = {items2: items};
             }
-            this.setState(state);
+            //this.setState(state);
         } else {
             const result = move(
                 this.getList(source.droppableId),
@@ -126,19 +148,20 @@ class Dashboard extends React.Component {
                 destination
             );
             if(result.drop1!==null && typeof result.drop1!=="undefined"){
-                this.setState({items0: result.drop1});
+                this.state.items[0]=result.drop1;
             }
             if(result.drop2!==null && typeof result.drop2!=="undefined") {
-                this.setState({items1: result.drop2});
+                this.state.items[1]=result.drop2;
             }
             if(result.drop3!==null && typeof result.drop3!=="undefined") {
-                this.setState({items2: result.drop3});
+                this.state.items[2]=result.drop3;
             }
         }
     };
 
     render() {
-        const {items0, items1,items2} = this.state;
+        //const {items0, items1,items2} = this.state;
+        const {items} = this.state;
         return (
 
             <DragDropContext onDragEnd={this.onDragEnd}>
@@ -149,7 +172,7 @@ class Dashboard extends React.Component {
                             {(provided, snapshot) => (
                                 <div className="row" ref={provided.innerRef}  {...provided.droppableProps}>
 
-                                    {items0.map((item, index) => (
+                                    {items[0].map((item, index) => (
                                         <div className="col-md-6">
                                             <Draggable key={item.id}
                                                        draggableId={item.id}
@@ -178,7 +201,7 @@ class Dashboard extends React.Component {
                         < Droppable droppableId="drop2">
                             {(provided, snapshot) => (
                                 <div className="row" ref={provided.innerRef}  {...provided.droppableProps}>
-                                    {items1.map((item, index) => (
+                                    {items[1].map((item, index) => (
                                         <div className="col-md-6">
                                             <Draggable key={item.id} draggableId={item.id}
                                                        index={index}>
@@ -203,7 +226,7 @@ class Dashboard extends React.Component {
                         <Droppable droppableId="drop3">
                             {(provided, snapshot) => (
                                 <div className="row" ref={provided.innerRef}  {...provided.droppableProps}>
-                                    {items2.map((item, index) => (
+                                    {items[2].map((item, index) => (
                                         <div className="col-md-6">
                                             <Draggable key={item.id}
                                                        draggableId={item.id}
