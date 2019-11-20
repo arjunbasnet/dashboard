@@ -56,9 +56,6 @@ class WeatherDisplay extends Component{
                 // iframe has been removed
                 if(!this.forcastLink.querySelector("iframe"))
                     window.__weatherwidget_init()
-                else
-                    console.log(this.forcastLink.querySelector("iframe"))
-    
             }            
         },500)
     }
