@@ -5,11 +5,9 @@ import LunchFeed from 'widgets/LunchFeed';
 import Weather from 'widgets/Weather';
 import NewsFeed from 'widgets/NewsFeed';
 import StockChart from 'widgets/StockChart';
-import {Draggable, Droppable, DragDropContext} from "react-beautiful-dnd";
-import {UserHelper} from '../../HelperAPI/userHelper'
+import {DragDropContext, Draggable, Droppable} from "react-beautiful-dnd";
 import {DashboardHelper} from "../../HelperAPI/dashboardHelper";
 import {WidgetHelper} from "../../HelperAPI/widgetConfigHelper";
-import babel from "@babel/core"
 
 const userId = "5dd5314f2424e65638f4a54c";
 const components = {
@@ -30,12 +28,7 @@ const setComponents = (component) =>{
   components[component.toLowerCase()]=eval[component];
     console.log(components);
 };*/
-/*DashboardHelper.getDashboardConfigByUserId(userId).then((res)=>{
-    res.dash[0].arrangement.forEach((value,key)=> {
 
-        //WidgetHelper.getWidgetById(value.widgetId).then((res)=>setComponents(res.widget.name));
-    });
-});*/
 const getItems = (countRow, offset = 0) => {
 
     let items = Array.from({length: countRow}, (v, k) => k).map(k => ({
@@ -48,7 +41,7 @@ const getItems = (countRow, offset = 0) => {
         items[1].content = 'Tasks';
     } else if (offset === 2) {
         items[0].content = 'LunchFeed';
-        items[1].content = 'Weather';
+        items[1].content = 'LunchFeed';
     } else if(offset===4){
         items[0].content = 'NewsFeed';
         items[1].content = 'StockChart';
@@ -87,32 +80,69 @@ function Widget(props) {
     return <WidgetRenderer {...props} innerRef={props.innerRef}/>;
 }
 
+
+
+
 class Dashboard extends React.Component {
+    state = {items: []};
+    async widgetState(){
+        await this.generateList()
+            .then((items)=>{
+                this.setState({ items: items }, () => console.log(this.state))
+            })
+    }
+    async generateList(){
+        let response = DashboardHelper.getDashboardConfigByUserId(userId);
+        let data = await response;
+        data=data.dash;
+        let items = [];
+        let row;
+        let value;
+        let arrangement = data[0].arrangement;
+        arrangement.sort(function(a,b){return a["column"] - b["column"]});
+        arrangement.sort(function(a,b){ return a["row"] - b["row"]});
+        for(let i=0;i< arrangement.length;i++){
+            value = arrangement[i];
+            if(value['column']===0){
+                if(value['row']!==0){
+                    items[value['row']-1]=row;
+                }
+                row = [];
+            }
+            let widgetName = await WidgetHelper.getWidgetById(value.widgetId).then((res)=> {return res.widget.name});
+            row[value["column"]] = {
+                id: value["_id"],
+                content: widgetName
+            };
+        }
+        items[value['row']]=row;
+        return items;
+
+    }
 
     id2List = {
         drop1: '0',
         drop2: '1',
         drop3: '2'
     };
-    componentDidMount() {
-    };
+    /*generateid2List(){
 
-    getList = id => {
-        console.log("list:")
-        console.log(this.state.items[this.id2List[id]]);
-        return this.state.items[this.id2List[id]];
+    }*/
+
+    getList = id => this.state.items[this.id2List[id]];
+    componentDidMount() {
+        //UNCOMMENT WHEN USING DATABASE
+       //this.widgetState();
     }
 
     constructor(props) {
         super(props);
-        this.state = {items: []};
-        for(let i=0;i<=2;i++){
+       for(let i=0;i<=2;i++){
             this.state.items[i]=getItems(2, i*2);
         }
 
         this.onDragEnd = this.onDragEnd.bind(this);
 
-        /**/
     }
     onDragEnd = result => {
         const {source, destination} = result;
@@ -126,20 +156,14 @@ class Dashboard extends React.Component {
                 source.index,
                 destination.index
             );
-            console.log(items);
-            //let state = {items};
 
             if (source.droppableId === 'drop2') {
                 this.state.items[1]= items;
-               // state = {items1: items};
             } else if (source.droppableId === 'drop1') {
                 this.state.items[0]= items;
-                //state = {items0: items};
             } else if (source.droppableId === 'drop3') {
                 this.state.items[2]= items;
-               // state = {items2: items};
             }
-            //this.setState(state);
         } else {
             const result = move(
                 this.getList(source.droppableId),
@@ -162,6 +186,7 @@ class Dashboard extends React.Component {
     render() {
         //const {items0, items1,items2} = this.state;
         const {items} = this.state;
+        //console.log(this.state);
         return (
 
             <DragDropContext onDragEnd={this.onDragEnd}>
