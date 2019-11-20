@@ -107,6 +107,7 @@ class Dashboard extends React.Component {
                 if(value['row']!==0){
                     items[value['row']-1]=row;
                 }
+                this.id2List["drop"+value['row']]=value['row'];
                 row = [];
             }
             let widgetName = await WidgetHelper.getWidgetById(value.widgetId).then((res)=> {return res.widget.name});
@@ -121,13 +122,11 @@ class Dashboard extends React.Component {
     }
 
     id2List = {
-        drop1: '0',
-        drop2: '1',
-        drop3: '2'
+        drop0: '0',
+        drop1: '1',
+        drop2: '2'
     };
-    /*generateid2List(){
 
-    }*/
 
     getList = id => this.state.items[this.id2List[id]];
     componentDidMount() {
@@ -157,11 +156,11 @@ class Dashboard extends React.Component {
                 destination.index
             );
 
-            if (source.droppableId === 'drop2') {
+            if (source.droppableId === 'drop1') {
                 this.state.items[1]= items;
-            } else if (source.droppableId === 'drop1') {
+            } else if (source.droppableId === 'drop0') {
                 this.state.items[0]= items;
-            } else if (source.droppableId === 'drop3') {
+            } else if (source.droppableId === 'drop2') {
                 this.state.items[2]= items;
             }
         } else {
@@ -171,14 +170,14 @@ class Dashboard extends React.Component {
                 source,
                 destination
             );
-            if(result.drop1!==null && typeof result.drop1!=="undefined"){
-                this.state.items[0]=result.drop1;
+            if(result.drop0!==null && typeof result.drop0!=="undefined"){
+                this.state.items[0]=result.drop0;
+            }
+            if(result.drop1!==null && typeof result.drop1!=="undefined") {
+                this.state.items[1]=result.drop1;
             }
             if(result.drop2!==null && typeof result.drop2!=="undefined") {
-                this.state.items[1]=result.drop2;
-            }
-            if(result.drop3!==null && typeof result.drop3!=="undefined") {
-                this.state.items[2]=result.drop3;
+                this.state.items[2]=result.drop2;
             }
         }
     };
@@ -186,97 +185,37 @@ class Dashboard extends React.Component {
     render() {
         //const {items0, items1,items2} = this.state;
         const {items} = this.state;
-        //console.log(this.state);
+        console.log(this.state.items.length);
         return (
 
             <DragDropContext onDragEnd={this.onDragEnd}>
                 <div className="content" id="widgetContainer">
                     <div className="container-fluid">
+                        {items.map((v,k)=> (
+                            <Droppable droppableId={"drop"+k}>
+                                {(provided, snapshot) => (
+                                    <div className="row" ref={provided.innerRef}  {...provided.droppableProps}>
+                                        {items[k].map((item, index) => (
+                                            <div className="col-md-6">
+                                                <Draggable key={item.id}
+                                                           draggableId={item.id}
+                                                           index={index}>
+                                                    {(provided, snapshot) => (
 
-                        <Droppable droppableId="drop1">
-                            {(provided, snapshot) => (
-                                <div className="row" ref={provided.innerRef}  {...provided.droppableProps}>
+                                                        <Widget widgetType={item.content}
+                                                                innerRef={provided.innerRef}
+                                                                {...provided.draggableProps}
+                                                                {...provided.dragHandleProps}/>
+                                                    )}
+                                                </Draggable>
+                                            </div>
+                                        ))}
+                                        {provided.placeholder}
+                                    </div>
+                                )}
+                            </Droppable>
+                        ))}
 
-                                    {items[0].map((item, index) => (
-                                        <div className="col-md-6">
-                                            <Draggable key={item.id}
-                                                       draggableId={item.id}
-                                                       index={index}>
-
-                                                {(provided, snapshot) => (
-
-                                                    <Widget widgetType={item.content}
-                                                            innerRef={provided.innerRef}
-                                                            {...provided.draggableProps}
-                                                            {...provided.dragHandleProps}/>
-
-
-                                                )}
-
-                                            </Draggable>
-
-
-                                        </div>
-                                    ))}
-
-                                    {provided.placeholder}
-                                </div>
-                            )}
-                        </Droppable>
-                        < Droppable droppableId="drop2">
-                            {(provided, snapshot) => (
-                                <div className="row" ref={provided.innerRef}  {...provided.droppableProps}>
-                                    {items[1].map((item, index) => (
-                                        <div className="col-md-6">
-                                            <Draggable key={item.id} draggableId={item.id}
-                                                       index={index}>
-
-                                                {(provided, snapshot) => (
-
-                                                    <Widget widgetType={item.content}
-                                                            innerRef={provided.innerRef}
-                                                            {...provided.draggableProps}
-                                                            {...provided.dragHandleProps}/>
-
-
-                                                )}
-
-                                            </Draggable>
-                                        </div>
-                                    ))}
-                                    {provided.placeholder}
-                                </div>
-                            )}
-                        </Droppable>
-                        <Droppable droppableId="drop3">
-                            {(provided, snapshot) => (
-                                <div className="row" ref={provided.innerRef}  {...provided.droppableProps}>
-                                    {items[2].map((item, index) => (
-                                        <div className="col-md-6">
-                                            <Draggable key={item.id}
-                                                       draggableId={item.id}
-                                                       index={index}>
-
-                                                {(provided, snapshot) => (
-
-                                                    <Widget widgetType={item.content}
-                                                            innerRef={provided.innerRef}
-                                                            {...provided.draggableProps}
-                                                            {...provided.dragHandleProps}/>
-
-
-                                                )}
-
-                                            </Draggable>
-
-
-                                        </div>
-                                    ))}
-
-                                    {provided.placeholder}
-                                </div>
-                            )}
-                        </Droppable>
                     </div>
 
                 </div>
