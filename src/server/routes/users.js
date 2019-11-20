@@ -3,7 +3,9 @@ const router = express.Router();
 let User = require( "../models/User");
 //get all users
 router.get('/', async (req, res) => {
-    let users = await User.find();
+    let qParams = req.query
+
+    let users = await User.find(qParams);
     return res.status(200).send(users);
 });
 
@@ -16,6 +18,7 @@ router.get('/:id', async (req, res) => {
         user
     });
 });
+
 
 //create user
 router.post('/', async (req, res) => {
