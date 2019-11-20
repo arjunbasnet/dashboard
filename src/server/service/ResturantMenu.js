@@ -92,16 +92,20 @@ class ResturantMenu {
                 name: menu.category
             }
 
-            let prices = menu.price.split('/')
-            menuItem.price = prices.reduce((price,p)=>{
-                p = p.trim()
-                if(!price){
-                    price = p
-                }else{
-                    price += '/'+ p
-                }
-                return price
-            },'')
+            if(menu.price){
+                let prices = menu.price.split('/')
+                menuItem.price = prices.reduce((price,p)=>{
+                    p = p.trim()
+                    if(!price){
+                        price = p
+                    }else{
+                        price += '/'+ p
+                    }
+                    return price
+                },'')                
+            }else{
+                menuItem.price = '5,60/2,60'
+            }
 
             menuItem.components = [menu.title_en]
             if(menu.properties){

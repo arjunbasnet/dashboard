@@ -7,33 +7,34 @@ const cx = classNames.bind(styles);
 class LunchFeed extends Component{
     
     state ={
-        resturantName: 'Fazer A Block',
-        resturantId: '001',
-        menus: [
-            {
-                id:1,
-                name: 'Pizza',
-                price: '4.00/10.00',
-                components: [
-                    "Tomato and pesto pizza (A ,L)",
-                    "Pulled pork and onion pizza (A ,L)",
-                    "Chicken pan pizza with feta (A ,VL ,VS)"        
-                ]
-            },
-            {
-                id:2,
-                name: "Lunch",
-                price: '2.60/8.00',
-                components: [
-                    "Whole grain organic pasta (* ,A ,L ,M ,Veg)",
-                    "Whole grain organic spaghetti (* ,A ,L ,M ,Veg)",
-                    "Chicken and cheese sauce (* ,A ,G ,L)",
-                    "Tomato and mushroom sauce (* ,A ,L ,M ,Veg ,VS)",
-                    "Tomato sauce (* ,A ,L)"
-                ]
-            }
-        ]
-    };
+        loading:true,
+        resturant:'a-bloc',
+        menus:[],
+    }
+
+    componentDidMount(){
+        this.fetchMenus(this.state.resturant)
+    }
+
+    onChange = (event)=>{
+        let resturant = event.target.value;
+        console.log('resturant cahnged',resturant);
+        this.setState({resturant:resturant});
+        this.fetchMenus(resturant)
+    }
+    
+    fetchMenus(resturant){
+        this.setState({loading:true})
+
+        fetch('/api/lunch/'+ resturant)
+        .then(res => res.json())
+        .then(res =>{
+            this.setState({menus:res.menus})
+        })
+        .finally(()=>{
+            this.setState({loading: false})
+        })
+    }
 
     render() {
         return (
@@ -48,10 +49,13 @@ class LunchFeed extends Component{
                     <form name="lunchFeedForm" className="form-inline LunchFeed__form">
                         <div className={cx('form-group')}>
                             <label htmlFor="lunchFeedResturantSelect" className="control-label">Resturant</label>
-                            <select id="lunchFeedResturantSelect" className={cx('form-control')}>
-                                <option value="fazer-block-a">Fazer Block A</option>
-                                <option value="fazer-dipoli">Fazer Dipoli</option>
-                                <option value="fazer-dipoli">Acemia</option>
+                            <select id="lunchFeedResturantSelect" className={cx('form-control')}
+                                onChange={this.onChange}
+                                value={this.state.resturant}>
+                                <option value="a-bloc">Fazer A Bloc</option>
+                                <option value="arvo">Sodexo Arvo</option>
+                                <option value="alvari">Alvari Amica</option>
+                                <option value="tietokoniikantalo">Sodexo CS Building</option>
                             </select>
                         </div>                        
                     </form>
@@ -80,8 +84,10 @@ class LunchFeed extends Component{
             <div className="footer">
               <hr />
               <div className="stats">
-                <i className="fa fa-history"></i> Updated 3 minutes ago
-                  </div>
+                    {
+                        this.state.loading?"LOADING ...":""
+                    }                  
+              </div>
             </div>
           </div>
         );
