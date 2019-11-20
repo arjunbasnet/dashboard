@@ -102,6 +102,7 @@
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^2.8.0",
     "@typescript-eslint/parser": "^2.8.0",
+    "cors": "^2.8.5",
     "cross-env": "^5.2.0",
     "file-loader": "^4.2.0",
     "node-sass": "^4.13.0",
@@ -146,11 +147,6 @@
       "web.jsx",
       "jsx",
       "node"
-    ]
-  },
-  "babel": {
-    "presets": [
-      "react-app"
     ]
   },
   "eslintConfig": {

@@ -2,7 +2,9 @@ const express = require('express');
 const app = express();
 const os = require('os');
 let db = require('./database')
+const cors = require('cors')
 
+app.use(cors());
 const usersRouter = require('./routes/users');
 const widgetsRouter = require('./routes/widgets');
 const widgetConfigRouter = require('./routes/widgetconfig');
@@ -10,7 +12,7 @@ const dashboardRouter = require('./routes/dashboard');
 const taskRouter = require('./routes/tasks');
 
 // connected
-db.isConnected()
+db.isConnected();
 
 
 
