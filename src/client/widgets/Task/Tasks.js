@@ -7,9 +7,9 @@ const proxy = require("../../HelperAPI/proxyHelper");
 
 
 let DEMO_USER = {
-    firstName: "Dummy",
-    lastName: "Bindra",
-    email: "dum@task-tester.com"
+    firstName: "Demo",
+    lastName: "User",
+    id: "5dd5314f2424e65638f4a54c"
 }
 
 class Tasks extends Component {
@@ -19,10 +19,11 @@ class Tasks extends Component {
     };
 
     componentDidMount(){
-        this.loadUser()
+        this.listTask()
     }
 
-    async loadUser(){
+    // finds or create dummy user
+    async findOrCreateUser(){
         this.setState({loading: true})
 
         let response =   await fetch(proxy+'/api/users?email='+DEMO_USER.email)
@@ -44,14 +45,6 @@ class Tasks extends Component {
             DEMO_USER.id = users[0]._id
         }
 
-        // load tasks belongin to users
-        response = await fetch(proxy+'/api/tasks?user='+ DEMO_USER.id)
-        let result = await response.json()
-        if(!result.error){
-            this.setState({tasks: result.tasks,loading:false})
-        }else{
-            this.setState({loading:false})
-        }
     }
 
     listTask(){
