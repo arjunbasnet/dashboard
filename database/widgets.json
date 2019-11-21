@@ -1,0 +1,6 @@
+{"_id":{"$oid":"5dd557d77343653c24e39f7d"},"name":"SalesChart","__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5dd557dc7343653c24e39f7e"},"name":"Tasks","__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5dd557e17343653c24e39f7f"},"name":"LunchFeed","__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5dd557e57343653c24e39f80"},"name":"Weather","__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5dd557e97343653c24e39f81"},"name":"NewsFeed","__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5dd557ec7343653c24e39f82"},"name":"StockChart","__v":{"$numberInt":"0"}}
