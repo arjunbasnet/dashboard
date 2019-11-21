@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styles from './LunchFeed.scss';
 import classNames from 'classnames/bind';
+const proxy = require("../../HelperAPI/proxyHelper");
 
 const cx = classNames.bind(styles);
 
@@ -25,7 +26,7 @@ class LunchFeed extends Component{
     fetchMenus(resturant){
         this.setState({loading:true})
 
-        fetch('/api/lunch/'+ resturant)
+        fetch(proxy+'/api/lunch/'+ resturant)
         .then(res => res.json())
         .then(res =>{
             this.setState({menus:res.menus})

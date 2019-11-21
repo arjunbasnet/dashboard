@@ -3,6 +3,8 @@ import TaskForm from './TaskForm';
 import cx from 'classnames';
 import uncheckImage from '../../assets/images/checkbox-uncheck.svg';
 import checkImage from '../../assets/images/checkbox-check.svg';
+const proxy = require("../../HelperAPI/proxyHelper");
+
 
 let DEMO_USER = {
     firstName: "Dummy",
@@ -23,12 +25,12 @@ class Tasks extends Component {
     async loadUser(){
         this.setState({loading: true})
 
-        let response =   await fetch('/api/users?email='+DEMO_USER.email)
+        let response =   await fetch(proxy+'/api/users?email='+DEMO_USER.email)
         let users = await response.json()
         
         // user with given email not found
         if(!users.length){
-            response = await fetch('/api/users',{
+            response = await fetch(proxy+'/api/users',{
                  method:'POST',
                  headers: {
                  'Content-Type': 'application/json'
@@ -43,7 +45,7 @@ class Tasks extends Component {
         }
 
         // load tasks belongin to users
-        response = await fetch('/api/tasks?user='+ DEMO_USER.id)
+        response = await fetch(proxy+'/api/tasks?user='+ DEMO_USER.id)
         let result = await response.json()
         if(!result.error){
             this.setState({tasks: result.tasks,loading:false})
@@ -55,7 +57,7 @@ class Tasks extends Component {
     listTask(){
         this.setState({loading:true})
 
-        fetch('/api/tasks?user='+ DEMO_USER.id)
+        fetch(proxy+'/api/tasks?user='+ DEMO_USER.id)
         .then(res => res.json())
         .then(res =>{
             this.setState({tasks:res.tasks})
@@ -67,7 +69,7 @@ class Tasks extends Component {
 
     async createTask(task){
         this.setState({loading:true})
-        let response = await fetch('/api/tasks',{
+        let response = await fetch(proxy+'/api/tasks',{
             method:'POST',
             headers: {
             'Content-Type': 'application/json'
@@ -81,7 +83,7 @@ class Tasks extends Component {
     }
 
     updateTask(id,updateData){
-        fetch('/api/tasks/'+id,{
+        fetch(proxy+'/api/tasks/'+id,{
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -95,7 +97,7 @@ class Tasks extends Component {
     }
 
     deleteTask(id){
-        fetch('/api/tasks/'+id,{
+        fetch(proxy+'/api/tasks/'+id,{
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'
