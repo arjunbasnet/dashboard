@@ -25,7 +25,7 @@ class Tasks extends Component {
 
         let response =   await fetch('/api/users?email='+DEMO_USER.email)
         let users = await response.json()
-        console.log('result ',users);
+        
         // user with given email not found
         if(!users.length){
             response = await fetch('/api/users',{
