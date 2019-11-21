@@ -18,7 +18,6 @@ class LunchFeed extends Component{
 
     onChange = (event)=>{
         let resturant = event.target.value;
-        console.log('resturant cahnged',resturant);
         this.setState({resturant:resturant});
         this.fetchMenus(resturant)
     }
