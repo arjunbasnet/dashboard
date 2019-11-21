@@ -18,16 +18,6 @@ const components = {
     newsfeed: NewsFeed,
     stockchart: StockChart
 };
-/*DashboardHelper.getDashboardConfigByUserId(userId).then((res)=>{
-    res.dash[0].arrangement.forEach((value,key)=> {
-        WidgetHelper.getWidgetById(value.widgetId).then((res)=>setComponents(res.widget.name));
-    });
-
-});
-const setComponents = (component) =>{
-  components[component.toLowerCase()]=eval[component];
-    console.log(components);
-};*/
 
 const getItems = (countRow, offset = 0) => {
 
@@ -46,7 +36,6 @@ const getItems = (countRow, offset = 0) => {
         items[0].content = 'NewsFeed';
         items[1].content = 'StockChart';
     }
-
 
     return items;
 };
@@ -84,11 +73,12 @@ function Widget(props) {
 
 
 class Dashboard extends React.Component {
-    state = {items: []};
+    state = {items: [], dashboardId: ""};
     async widgetState(){
         await this.generateList()
             .then((items)=>{
-                this.setState({ items: items }, () => console.log(this.state))
+                console.log(items);
+                this.setState({ items: items })
             })
     }
     async generateList(){
@@ -99,6 +89,7 @@ class Dashboard extends React.Component {
         let row;
         let value;
         let arrangement = data[0].arrangement;
+        this.setState({dashboardId: data[0]._id });
         arrangement.sort(function(a,b){return a["column"] - b["column"]});
         arrangement.sort(function(a,b){ return a["row"] - b["row"]});
         for(let i=0;i< arrangement.length;i++){
@@ -113,7 +104,8 @@ class Dashboard extends React.Component {
             let widgetName = await WidgetHelper.getWidgetById(value.widgetId).then((res)=> {return res.widget.name});
             row[value["column"]] = {
                 id: value["_id"],
-                content: widgetName
+                content: widgetName,
+                widgetId: value.widgetId
             };
         }
         items[value['row']]=row;
@@ -131,7 +123,7 @@ class Dashboard extends React.Component {
     getList = id => this.state.items[this.id2List[id]];
     componentDidMount() {
         //UNCOMMENT WHEN USING DATABASE
-       //this.widgetState();
+       this.widgetState();
     }
 
     constructor(props) {
@@ -141,9 +133,13 @@ class Dashboard extends React.Component {
         }
 
         this.onDragEnd = this.onDragEnd.bind(this);
-
+        this.forceUpdateHandler = this.forceUpdateHandler.bind(this);
     }
+    forceUpdateHandler(){
+        this.forceUpdate();
+    };
     onDragEnd = result => {
+        let data = {arrangement: []};
         const {source, destination} = result;
         if (!destination) {
             return;
@@ -170,22 +166,28 @@ class Dashboard extends React.Component {
                 source,
                 destination
             );
-            if(result.drop0!==null && typeof result.drop0!=="undefined"){
-                this.state.items[0]=result.drop0;
-            }
-            if(result.drop1!==null && typeof result.drop1!=="undefined") {
-                this.state.items[1]=result.drop1;
-            }
-            if(result.drop2!==null && typeof result.drop2!=="undefined") {
-                this.state.items[2]=result.drop2;
-            }
+            this.state.items.map((v,k)=>{
+                if(result["drop"+k]!==null && typeof result["drop"+k]!=="undefined"){
+                    this.state.items[k]=result["drop"+k];
+                }
+            });
         }
+        this.state.items.map((v,k)=>{
+            v.map((v1,k1)=>{
+                data.arrangement.push({
+                    widgetId: v1.widgetId,
+                    row: k,
+                    column: k1,
+                })
+            });
+        });
+        //UNCOMMENT THIS FOR DB
+       //DashboardHelper.updateDashboard(this.state.dashboardId,data).then((res)=>this.forceUpdate());
+
     };
 
     render() {
-        //const {items0, items1,items2} = this.state;
         const {items} = this.state;
-        console.log(this.state.items.length);
         return (
 
             <DragDropContext onDragEnd={this.onDragEnd}>

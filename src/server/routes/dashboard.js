@@ -36,7 +36,6 @@ router.post('/', async (req, res) => {
 
 router.put(`/:id`, async (req, res) => {
     const {id} = req.params;
-
     let dash = await DashboardConfig.findByIdAndUpdate(id, req.body);
 
     return res.status(202).send({

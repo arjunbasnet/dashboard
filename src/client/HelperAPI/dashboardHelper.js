@@ -35,9 +35,13 @@ export class DashboardHelper {
         }
     };
 
-    static updateDashboard = async id => {
+    static updateDashboard = async (id, data) => {
         try {
-            let response = await fetch(proxy + "/api/dashboard/" + id, {method: "PUT"});
+            let response = await fetch(proxy + "/api/dashboard/" + id, {
+                method: "PUT",
+                body: JSON.stringify(data),
+                headers: {'content-type': 'application/json'}
+            });
             return await response.json()
         } catch (error) {
             return console.log(error);
