@@ -123,7 +123,7 @@ class Dashboard extends React.Component {
     getList = id => this.state.items[this.id2List[id]];
     componentDidMount() {
         //UNCOMMENT WHEN USING DATABASE
-       this.widgetState();
+       //this.widgetState();
     }
 
     constructor(props) {

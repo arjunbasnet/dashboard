@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import cx from 'classnames';
 import { setMobileNavVisibility } from '../../reducers/Layout';
 import { withRouter } from 'react-router-dom';
-
+import AboutUs from '../AboutUs/index';
 import Header from './Header';
 import Footer from './Footer';
 import SideBar from '../../components/SideBar';
@@ -36,6 +36,7 @@ const Main = ({
           <Header />
           <Route exact path="/" component={Dashboard} />
           <Route path="/profile" component={UserProfile} />
+          <Route path="/about" component={AboutUs} />
           <Footer />
         </div>
       </div>
