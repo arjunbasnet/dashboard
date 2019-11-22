@@ -182,7 +182,7 @@ class Dashboard extends React.Component {
             });
         });
         //UNCOMMENT THIS FOR DB
-       //DashboardHelper.updateDashboard(this.state.dashboardId,data).then((res)=>this.forceUpdate());
+       //DashboardHelper.updateDashboard(this.state.dashboardId,data);
 
     };
 
