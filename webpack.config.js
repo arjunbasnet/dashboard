@@ -8,6 +8,7 @@ const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 const getClientEnvironment = require('./config/env');
 const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
+const ManifestPlugin = require('webpack-manifest-plugin');
 const webpack = require('webpack');
 const publicUrl = '';
 const env = getClientEnvironment(publicUrl);
@@ -188,6 +189,7 @@ module.exports = {
         port: 3000,
         //overlay:true,
         open: true,
+        contentBase: paths.appPublic,
        // contentBase: {target: 'http://localhost:3000'},
        //contentBase: path.join(__dirname, outputDirectory),
        historyApiFallback: true,
@@ -203,9 +205,11 @@ module.exports = {
         new HtmlWebpackPlugin({
             inject: true,
             template: paths.appHtml,
+            favicon:  path.join(paths.appPublic, "favicon.ico"),
         }),
         new InterpolateHtmlPlugin(HtmlWebpackPlugin, env.raw),
         new CaseSensitivePathsPlugin(),
+        new ManifestPlugin()
         //new webpack.HotModuleReplacementPlugin(),
     ],
     node: {

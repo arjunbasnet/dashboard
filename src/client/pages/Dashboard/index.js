@@ -1,5 +1,5 @@
 import React from 'react';
-import SalesChart from './SalesChart';
+import SalesChart from 'widgets/SalesChart/SalesChart';
 import Tasks from 'widgets/Task/Tasks';
 import LunchFeed from 'widgets/LunchFeed';
 import Weather from 'widgets/Weather';
@@ -77,7 +77,6 @@ class Dashboard extends React.Component {
     async widgetState(){
         await this.generateList()
             .then((items)=>{
-                console.log(items);
                 this.setState({ items: items })
             })
     }
@@ -123,7 +122,7 @@ class Dashboard extends React.Component {
     getList = id => this.state.items[this.id2List[id]];
     componentDidMount() {
         //UNCOMMENT WHEN USING DATABASE
-       //this.widgetState();
+       this.widgetState();
     }
 
     constructor(props) {
@@ -182,7 +181,7 @@ class Dashboard extends React.Component {
             });
         });
         //UNCOMMENT THIS FOR DB
-       //DashboardHelper.updateDashboard(this.state.dashboardId,data);
+       DashboardHelper.updateDashboard(this.state.dashboardId,data);
 
     };
 

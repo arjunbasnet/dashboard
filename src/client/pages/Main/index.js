@@ -13,7 +13,6 @@ import SideBar from '../../components/SideBar';
  * Pages
  */
 import Dashboard from '../Dashboard';
-import UserProfile from '../UserProfile';
 
 const Main = ({
   mobileNavVisibility,
@@ -35,7 +34,6 @@ const Main = ({
         <div className="main-panel">
           <Header />
           <Route exact path="/" component={Dashboard} />
-          <Route path="/profile" component={UserProfile} />
           <Route path="/about" component={AboutUs} />
           <Footer />
         </div>

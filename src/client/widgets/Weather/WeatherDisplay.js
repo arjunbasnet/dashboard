@@ -53,9 +53,12 @@ class WeatherDisplay extends Component{
         // to make sure widget initated 
         setTimeout(()=>{
             if(window.__weatherwidget_init){
-                // iframe has been removed
-                if(!this.forcastLink.querySelector("iframe"))
-                    window.__weatherwidget_init()
+                if(typeof this.forcastLink!=="undefined" && this.forcastLink!==null)
+                {
+                    // iframe has been removed
+                    if(!this.forcastLink.querySelector("iframe"))
+                        window.__weatherwidget_init()
+                }
             }            
         },500)
     }
