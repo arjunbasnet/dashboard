@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { toggleMobileNavVisibility } from '../../reducers/Layout';
 import { Navbar, Nav, NavItem, NavDropdown, MenuItem, FormGroup, FormControl} from 'react-bootstrap';
-import UserInfo from './UserInfo';
+
 
 
 const Header = ({

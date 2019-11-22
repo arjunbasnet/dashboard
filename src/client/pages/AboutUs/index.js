@@ -15,30 +15,30 @@ class AboutUs extends React.Component {
                                     Say goodbye to clicking through different information sources, and say hello to
                                     keeping focused.
                                     There is no bluff, no ads, no distractions, just the information you need!</p>
-                                <p>With version 1.0 of the Service, you can:
-                                    <ul>
-                                        <li>Move widgets around</li>
-                                        <li>Interact with most of the widgets</li>
-                                        <li>Store information locally</li>
-                                    </ul>
-                                </p>
-                                <p>
-                                    You can not (yet):
-                                    <ul>
-                                        <li>Add or delete widgets</li>
-                                        <li>Log in</li>
-                                    </ul>
-                                </p>
+                                <p>With version 1.0 of the Service, you can:</p>
+                                <ul>
+                                    <li>Move widgets around</li>
+                                    <li>Interact with most of the widgets</li>
+                                    <li>Store information locally</li>
+                                </ul>
+
+                                <p> You can not (yet):</p>
+                                <ul>
+                                    <li>Add or delete widgets</li>
+                                    <li>Log in</li>
+                                </ul>
+
                                 <p> Thanks for trying our service!</p>
 
                                 <p>Arjun, Mihai, and Ohto</p>
 
                                 <p>Please give us feedback with the following form of bugs and improvements for the
                                     service:</p>
-                                <div className="col-md-6 col-md-offset-3" >
+                                <div className="col-md-6 col-md-offset-3">
                                     <div className="card">
                                         <div className="content">
-                                            <form className="form-horizontal" action="mailto:ohtopen@gmail.com" method="POST">
+                                            <form className="form-horizontal" action="mailto:ohtopen@gmail.com"
+                                                  method="POST">
                                                 <div className="form-group"><label
                                                     className="col-md-3 control-label">Name</label>
                                                     <div className="col-md-9">
@@ -61,7 +61,8 @@ class AboutUs extends React.Component {
                                                     className="col-md-3 control-label">Message</label>
                                                     <div className="col-md-9">
                                                         <div>
-                                                            <textarea name="message" className="form-control error"></textarea>
+                                                            <textarea name="message"
+                                                                      className="form-control error"></textarea>
                                                         </div>
                                                     </div>
                                                 </div>
